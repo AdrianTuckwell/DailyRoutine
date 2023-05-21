@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Routine Infographic</title>
+  <script>
+    // Update the h1 title with the current date
+    var currentDate = new Date();
+    var options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    var formattedDate = currentDate.toLocaleDateString('en-US', options);
+  </script>
+  <style>
+    /* Define styles for the infographic */
+    body {
+      <!-- font-family: "Courier New", Courier, monospace; -->
+    }
+
+    .routine {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .time-slot {
+      width: 140px;
+      text-align: center;
+      padding: 10px;
+      border: 1px solid #000;
+      background-color: #f0f0f0;
+    }
+
+    .activity {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #000;
+      margin-left: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Color-coded classes */
+    .work {
+      background-color: #ffc7c7; /* Light red */
+    }
+
+    .leisure {
+      background-color: #c7e9ff; /* Light blue */
+    }
+
+    .daily {
+      background-color: #c7ffca; /* Light green */
+    }
+
+    .line {
+      position: absolute;
+      top: 50%;
+      left: 160px;
+      height: 2px;
+      width: calc(100% - 200px);
+      background-color: #000;
+      z-index: 1;
+    }
+
+    /* Added styles for checkbox and label */
+    .activity input[type="checkbox"] {
+      order: 2;
+      margin-left: 10px;
+    }
+
+    .activity label {
+      order: 1;
+      margin-right: 10px;
+    }
+  </style>
+  <script>
+    function resetCheckboxes() {
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+    function generateReport() {
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      var report = 'Checkbox Report for ' + formattedDate + ':\n\n';
+
+      checkboxes.forEach(function(checkbox) {
+        var activity = checkbox.parentElement.innerText.trim();
+        var status = checkbox.checked ? 'Checked' : 'Not Checked';
+        report += activity + ' - ' + status + '\n';
+      });
+
+      // Create a download link for the report file
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(report));
+      element.setAttribute('download', 'checkbox_report.txt');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+  </script>
+</head>
+<body>
+  <p id="title">Today: <span id="date"></span></p>
+
+  <div class="routine">
+    <div class="time-slot">7:00-7:30</div>
+    <div class="activity daily">Wake</div>
+    <div class="activity leisure">Walk</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">7:30-8:00</div>
+    <div class="activity leisure">Chill</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">8:00-8:30</div>
+    <div class="activity work">Start (work)</div>
+    <div class="activity leisure">
+      <label for="diary">Diary</label>
+      <input type="checkbox" id="diary">
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">9:00-12:00</div>
+    <div class="activity work">Standup</div>
+    <div class="activity leisure">
+      <label for="read">Read chapter (10mins)</label>
+      <input type="checkbox" id="read">
+    </div>
+    <div class="activity leisure">
+      <label for="draw">Draw (10 mins)</label>
+      <input type="checkbox" id="draw">
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">12:00-13:00</div>
+    <div class="activity daily">Lunch</div>
+    <div class="activity leisure">
+      <label for="cycle">Cycle</label>
+      <input type="checkbox" id="cycle">
+    </div>
+    <div class="activity leisure">
+      <label for="exercise">Exercise (15mins)</label>
+      <input type="checkbox" id="exercise">
+    </div>
+
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">13:00-16:00</div>
+    <div class="activity work">Work</div>
+    <div class="activity leisure">
+      <label for="meditate">Meditate (15mins)</label>
+      <input type="checkbox" id="meditate">
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">16:00-16:30</div>
+    <div class="activity work">End (work)</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">16:30-19:00</div>
+    <div class="activity daily">Tea</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">19:00-21:00</div>
+    <div class="activity leisure">
+      <label for="hobby">Hobby</label>
+      <input type="checkbox" id="hobby">
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">21:00-23:00</div>
+    <div class="activity leisure">Chill</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="routine">
+    <div class="time-slot">23:00-23:30</div>
+    <div class="activity daily">Bed</div>
+    <div class="activity leisure">
+      <label for="reading">Read</label>
+      <input type="checkbox" id="reading">
+    </div>
+    <div class="activity leisure">
+      <label for="podcast">Podcast</label>
+      <input type="checkbox" id="podcast">
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div>
+    <button onclick="resetCheckboxes()">Reset Checkboxes</button>
+     <button onclick="generateReport()">Generate Report</button>
+  </div>
+
+  <script>
+    // Set the date in the span element
+    document.getElementById('date').textContent = formattedDate;
+  </script>
+
+
+</body>
+</html>
